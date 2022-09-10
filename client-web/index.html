@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sync Browser Time - Example Client</title>
+
+        <script type="text/javascript" src="./tacitact/tacitact.js" defer></script>
+        <script type="text/javascript">
+            function main () {
+                const t = new tacitact.Client()
+                console.log(t.now())
+
+                const browserTimeEl = document.getElementById('browser-time')
+                const syncedTimeEl = document.getElementById('synced-time')
+                const currentOffsetEl = document.getElementById('current-offset')
+
+                setInterval(() => {
+                    browserTimeEl.innerText = Date.now()
+                    syncedTimeEl.innerText = t.now()
+                    currentOffsetEl.innerText = t.offset() || 'not synced yet'
+                }, 1000)
+
+                setInterval(async () => {
+                    console.log(await t.sync())
+                }, 10000);
+            }
+
+            window.onload = main
+        </script>
+        <style>
+            .hint {
+                border-left: 4px solid #f9c;
+                padding: 4px 8px;
+            }
+
+            table {
+                border: 0;
+                border-collapse: collapse;
+            }
+
+            table > * {
+                text-align: left;
+                padding: 4px;
+            }
+            
+            table th {
+                padding-right: 16px;
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <p class="hint">Don't forget start one of the webservers to have the client js served!</p>
+        <div>
+            <table>
+                <tr>
+                    <th>Browser Time</th>
+                    <td id="browser-time"></td>
+                </tr>
+                <tr>
+                    <th>Synced Time</th>
+                    <td id="synced-time"></td>
+                </tr>
+                <tr>
+                    <th>Current Offset</th>
+                    <td id="current-offset"></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

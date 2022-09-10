@@ -1,0 +1,10 @@
+{
+    "name": "tacitact-example-server-mjs",
+    "type": "module",
+    "scripts": {
+        "serve": "node index.js"
+    },
+    "dependencies": {
+        "tacitact": "^0.3.0"
+    }
+}
