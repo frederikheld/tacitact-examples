@@ -2,19 +2,13 @@ import http from 'http'
 import fs from 'fs'
 import path from 'path'
 
-import tacitact from 'tacitact'
-import { Server } from 'tacitact'
+// import tacitact from 'tacitact' // import default
+import { Server } from 'tacitact' // import named
 
 
 // config:
 
 const port = 8100
-
-
-// smoke test:
-
-console.log(tacitact.Server)
-console.log(Server)
 
 
 // start webserver:
@@ -37,7 +31,8 @@ httpServer.listen(port, () => {
 
 // start tacitact server:
 
-const t = new Server(httpServer)
+// const t = new tacitact.Server(httpServer) // with default import
+const t = new Server(httpServer) // with named import
 
 t.connected((socket) => {
     console.log('tacitact server connected to new client via socket ' + socket.id)

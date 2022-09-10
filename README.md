@@ -30,12 +30,12 @@ $ npm run serve
 
 See source code in [client-web](./client-web/).
 
-Start one of the server examples (it works with both), then open
+Start one of the server examples (it will work with both). The server will serve the client JS files as well as the `index.html` page, which you can open in your web browser via:
 
 ```
 http://localhost:<port>
 ```
 
-(where `<port>` is the port that was logged to the console when starting the server) in your web browser.
+(where `<port>` is the port that was logged to the console when starting the server)
 
 You will see how the time is being synced. For more detailed output open the developer console by pressing <kbd>F12</kbd>.
