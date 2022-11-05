@@ -1,6 +1,29 @@
 # Tacitact examples
 
-Examples on how to use the [`tacitact`](https://www.npmjs.com/package/tacitact) _npm_ package in different environments.
+Examples on how to use the [`tacitact`](https://github.com/frederikheld/tacitact) library in different environments.
+
+## Provide `tacitact` dependency
+
+Before you install the different examples as documented in the subsequent paragraphs, you have to provide the `tacitact` dependency. This is necessary because `tacitact` lives in a private GitHub repository that can not be installed with npm directly. Instead npm installs it as a file dependency, which means that you have to clone and build the repository yourself before npm can install it.
+
+Clone the [`tacitact` repo](https://github.com/frederikheld/tacitact) into the same directory where this `tacitact-examples` repo is located:
+
+```
+common_root
+ ├─ tacitact
+ └─ tacitact-examples
+```
+
+After that, you can `cd` into the `tacitact` directory and run
+
+```sh
+$ npm install
+$ npm run build
+```
+
+to build `tacitact`. For more options for building the library, see [its readme file](https://github.com/frederikheld/tacitact#develop).
+
+`cd` back into the `tacitact-examples` directory and you're ready to install the examples as documented in the folowing paragraphs.
 
 ## Import `Server` in ESM module
 

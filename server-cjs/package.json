@@ -5,6 +5,6 @@
         "serve": "node index.js"
     },
     "dependencies": {
-        "tacitact": "^0.3.0"
+        "tacitact": "file:../../tacitact"
     }
 }
