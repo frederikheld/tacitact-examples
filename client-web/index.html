@@ -6,22 +6,20 @@
         <script type="text/javascript" src="./tacitact/tacitact.js" defer></script>
         <script type="text/javascript">
             function main () {
-                const t = new tacitact.Client()
-                console.log(t.now())
+                const tc = new tacitact.Client()
+                console.log(tc.getTime())
 
                 const browserTimeEl = document.getElementById('browser-time')
                 const syncedTimeEl = document.getElementById('synced-time')
                 const currentOffsetEl = document.getElementById('current-offset')
 
+                tc.startSync(10000)
+
                 setInterval(() => {
                     browserTimeEl.innerText = Date.now()
-                    syncedTimeEl.innerText = t.now()
-                    currentOffsetEl.innerText = t.offset() || 'not synced yet'
+                    syncedTimeEl.innerText = tc.getTime()
+                    currentOffsetEl.innerText = tc.offset()
                 }, 1000)
-
-                setInterval(async () => {
-                    console.log(await t.sync())
-                }, 10000);
             }
 
             window.onload = main
