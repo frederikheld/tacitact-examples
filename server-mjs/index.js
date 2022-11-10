@@ -8,25 +8,19 @@ import { Server } from 'tacitact' // import named
 
 // config:
 
-const port = 8100
+const CONFIG = JSON.parse(
+    fs.readFileSync(
+        new URL('../config.json', import.meta.url)
+    )
+)
 
 
 // start webserver:
 
 const httpServer = http.Server()
 
-const fileContents = fs.readFileSync(path.resolve('..', 'client-web', 'index.html'))
-
-httpServer.on('request', (req, res) => {
-    console.log('got request', req.url)
-    if ([ '/', '/index.html' ].includes(req.url)) {
-        res.writeHead(200, { 'Content-Type': 'text/html' })
-        res.end(fileContents)
-    }
-})
-
-httpServer.listen(port, () => {
-    console.log('http server listening on port ' + port)
+httpServer.listen(CONFIG.server.port, () => {
+    console.log('http server listening on port ' + CONFIG.server.port)
 })
 
 // start tacitact server:

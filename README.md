@@ -25,6 +25,10 @@ to build `tacitact`. For more options for building the library, see [its readme 
 
 `cd` back into the `tacitact-examples` directory and you're ready to install the examples as documented in the folowing paragraphs.
 
+## Global config
+
+[`config.json`](./config.json) configures the wiring between client and server. It works as it is but you can change values if you want to use different ports.
+
 ## Import `Server` in ESM module
 
 See source code in [server-mjs](./server-mjs/).

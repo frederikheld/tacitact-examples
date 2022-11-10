@@ -8,7 +8,8 @@ const { Server } = require('tacitact') // import named
 
 // config:
 
-const port = 8101
+const CONFIG = require('../config.json')
+console.log(CONFIG)
 
 
 // start webserver:
@@ -25,8 +26,8 @@ httpServer.on('request', (req, res) => {
     }
 })
 
-httpServer.listen(port, () => {
-    console.log('http server listening on port ' + port)
+httpServer.listen(CONFIG.server.port, () => {
+    console.log('http server listening on port ' + CONFIG.server.port)
 })
 
 // start tacitact server:
