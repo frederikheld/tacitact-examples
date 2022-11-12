@@ -1,0 +1,15 @@
+{
+  "name": "client-web",
+  "version": "0.0.1",
+  "description": "Start one of the server implementations to have the client `index.html` and the `tacitact` client files served by. This is done to have client and server served on the same port to avoid CORS issues.",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Frederik S. Held <kontakt@frederikheld.de>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

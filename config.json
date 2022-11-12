@@ -1,0 +1,9 @@
+{
+    "clientWeb": {
+        "port": 3001,
+        "serverPort": 3101
+    },
+    "server": {
+        "port": 3101
+    }
+}
