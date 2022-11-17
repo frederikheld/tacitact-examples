@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>socket.io cors example</title>
+
+        <script type="text/javascript" src="http://localhost:8103/socket.io/socket.io.js" defer></script>
+        <script type="text/javascript">
+
+            let socket
+
+            function main () {
+                socket = io('http://localhost:8103')
+
+                socket.on('connect', () => {
+                    console.log('new connection with server established via socket ' + socket.id)
+                })
+
+                socket.on('response', (message) => {
+                    console.log('message received:', message)
+
+                    writeLog('received', message)
+                })
+            }
+
+            function sendMessage (event) {
+                event.preventDefault()
+
+                const message = event.target['message'].value
+                console.log('sending message:', message)
+
+                socket.emit('message', { text: message })
+
+                event.target['message'].value = ''
+
+                writeLog('sent', message)
+            }
+
+            function writeLog(type, message) {
+                const logEl = document.getElementById('log')
+
+                const messageEl = document.createElement('div')
+                messageEl.classList.add('message', type)
+                messageEl.innerHTML = message
+
+                logEl.append(messageEl)
+            }
+
+            window.onload = main
+        </script>
+        <style>
+            #log {
+                float: left;
+                width: 400px;
+                margin: auto;
+                font-family: sans-serif;
+            }
+
+            #log .message {
+                clear: both;
+                padding: 8px 12px;
+                margin-bottom: 12px;
+                border-radius: 8px;
+            }
+
+            #log .sent {
+                float: right;
+                margin-left: 48px;
+                border-bottom-right-radius: 0px;
+                background-color: lightblue;
+            }
+
+            #log .received {
+                float: left;
+                margin-right: 48px;
+                border-bottom-left-radius: 0px;
+                background-color: lightgray;
+            }
+
+            #log {
+                clear: both;
+                margin-bottom: 8px;
+            }
+
+            #form-send {
+                clear: both;
+                margin-top: 8px;
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <div id="log">
+            <!-- <div class="message sent">Hello!</div>
+            <div class="message received">!olleH</div> -->
+        </div>
+        <form id="form-send" onsubmit="sendMessage(event)">
+            <input type="text" name="message" placeholder="type message here ..." autocomplete="off" />
+            <input type="submit" value="reverse" />
+        </form>
+    </body>
+</html>
