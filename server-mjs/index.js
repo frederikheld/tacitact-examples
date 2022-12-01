@@ -1,9 +1,9 @@
-import http from 'http'
+import express from 'express'
+import cors from 'cors'
 import fs from 'fs'
 import path from 'path'
 
-// import tacitact from 'tacitact' // import default
-import { Server } from 'tacitact' // import named
+import { Server } from 'tacitact'
 
 
 // config:
@@ -17,19 +17,58 @@ const CONFIG = JSON.parse(
 
 // start webserver:
 
-const httpServer = http.Server()
+const corsConfig = {
+    origin: 'http://localhost:' + CONFIG.clientVue3.port,
+    methods: ['GET', 'POST']
+}
 
-httpServer.listen(CONFIG.server.port, () => {
+const app = express()
+// app.use(cors(corsConfig))
+app.options('*', cors(corsConfig)) // enables preflight headers
+app.use('/', (req, res, next) => {
+    console.log('http request:', req.method, req.url)
+    next()
+})
+
+// serve tacitact client files:
+
+const __webdir = path.resolve('node_modules', 'tacitact', 'dist', 'web')
+
+app.get('/tacitact/tacitact.min.js', (req, res) => {
+    res.sendFile(path.resolve(__webdir, 'tacitact.min.js'),{
+        headers: {
+            'content-type': 'text/javascript'
+        }
+    })
+})
+
+app.get('/tacitact/tacitact.min.js.map', (req, res) => {
+    res.sendFile(path.resolve(__webdir, 'tacitact.min.js.map'), {
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
+})
+
+// start web server:
+
+const httpServer = app.listen(CONFIG.server.port, () => {
     console.log('http server listening on port ' + CONFIG.server.port)
+})
+
+httpServer.on('upgrade', (req) => {
+    console.log('ws request:', req.url)
 })
 
 // start tacitact server:
 
-// const t = new tacitact.Server(httpServer) // with default import
-const t = new Server(httpServer) // with named import
+const socketIOServerConfig = {
+    cors: corsConfig,
+    debug: true
+}
 
-t.connected((socket) => {
+const ts = new Server(httpServer, socketIOServerConfig)
+
+ts.connection((socket) => {
     console.log('tacitact server connected to new client via socket ' + socket.id)
 })
-
-t.serveClientFiles()
