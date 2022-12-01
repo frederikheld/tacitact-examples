@@ -3,10 +3,13 @@
     <head>
         <title>Sync Browser Time - Example Client</title>
 
-        <script type="text/javascript" src="./tacitact/tacitact.js" defer></script>
+        <script type="text/javascript" src="./tacitact/tacitact.min.js" defer></script>
         <script type="text/javascript">
             function main () {
-                const tc = new tacitact.Client()
+                const tc = new tacitact.Client(window.location.href, { debug: true })
+                tc.connected((socket) => {
+                    console.log('[client-web] tacitact connected via socket', socket.id)
+                })
                 console.log(tc.getTime())
 
                 const browserTimeEl = document.getElementById('browser-time')
@@ -15,11 +18,19 @@
 
                 tc.startSync(10000)
 
-                setInterval(() => {
-                    browserTimeEl.innerText = Date.now()
-                    syncedTimeEl.innerText = tc.getTime()
-                    currentOffsetEl.innerText = tc.offset()
-                }, 1000)
+                browserTimeEl.innerText = Date.now()
+                syncedTimeEl.innerText = 'syncing ...'
+                currentOffsetEl.innerText = 'syncing ...'
+
+                tc.synced(() => {
+                    console.log('[client-web] first sync successful')
+                    setInterval(() => {
+                        browserTimeEl.innerText = Date.now()
+                        syncedTimeEl.innerText = tc.getTime()
+                        currentOffsetEl.innerText = tc.getOffset()
+                    }, 1000)
+                })
+
             }
 
             window.onload = main
